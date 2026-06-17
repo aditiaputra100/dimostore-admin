@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('parent_id')->nullable();
             $table->string('name', 100);
-            $table->string('slug', 120);
+            $table->string('slug', 120)->unique();
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->tinyInteger('is_active')->default(1);
