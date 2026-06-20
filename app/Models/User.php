@@ -22,4 +22,8 @@ class User extends Model
     public function cart(): HasOne {
         return $this->hasOne(Cart::class);
     }
+
+    public function orders(): HasMany {
+        return $this->hasMany(Order::class);
+    }
 }
