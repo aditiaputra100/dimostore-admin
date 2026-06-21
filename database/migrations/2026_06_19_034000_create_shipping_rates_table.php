@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('price', 10);
         });
 
-        Schema::table('shipping_zones', function(Blueprint $table) {
+        Schema::table('shipping_rates', function(Blueprint $table) {
             $table->foreign('shipping_zone_id')->references('id')->on('shipping_zones')->onDelete('CASCADE');
         });
         
