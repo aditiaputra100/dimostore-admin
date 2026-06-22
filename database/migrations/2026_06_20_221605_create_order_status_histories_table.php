@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('order_id', unsigned:true);
             $table->string('status', 30);
             $table->text('note')->nullable();
-            $table->bigInteger('created_by', unsigned:true);
+            $table->bigInteger('created_by', unsigned:true)->nullable();
         });
 
         Schema::table('order_status_histories', function(Blueprint $table) {

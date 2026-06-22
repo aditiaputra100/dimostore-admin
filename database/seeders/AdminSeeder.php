@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
         $superadmin = new Admin();
         $superadmin['name'] = 'superadmin';
         $superadmin['email'] = 'superadmin@email.com';
-        $superadmin['password'] = 'superadmin';
+        $superadmin['password'] = bcrypt('superadmin');
         $superadmin['role'] = 'super_admin';
 
         $superadmin->save();
@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
         $admin = new Admin();
         $admin['name'] = 'admin';
         $admin['email'] = 'admin@email.com';
-        $admin['password'] = 'admin';
+        $admin['password'] = bcrypt('admin');
         $admin['role'] = 'admin';
 
         $admin->save();
