@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['parent_id', 'name', 'description', 'image', 'is_active', 'deleted_at'])]
+#[Fillable(['parent_id', 'name', 'slug', 'description', 'image', 'is_active', 'deleted_at'])]
 class Category extends Model
 {
+    use SoftDeletes;
+
     public function parent(): BelongsTo {
         return $this->belongsTo(Category::class, 'parent_id');
     }
