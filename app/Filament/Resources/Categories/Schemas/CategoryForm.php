@@ -23,12 +23,10 @@ class CategoryForm
                 TextInput::make('name')
                     ->live(onBlur: true)
                     ->afterStateUpdated(function(Set $set, ?string $state, string $operation) {
-                        if ($operation !== 'create') {
-                            return;
-                        }
 
                         $set('slug', Str::slug($state));
                     })
+                    ->maxLength(255)
                     ->required(),
                 TextInput::make('slug')
                     ->unique()

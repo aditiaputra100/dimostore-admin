@@ -22,7 +22,8 @@ class CategoriesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('slug')
                     ->searchable(),
                 IconColumn::make('is_active')
