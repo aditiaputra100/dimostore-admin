@@ -7,6 +7,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
@@ -17,9 +18,6 @@ class CategoryForm
     {
         return $schema
             ->components([
-                Select::make('parent_id')
-                    ->relationship('parent', 'name')
-                    ->default(null),
                 TextInput::make('name')
                     ->live(onBlur: true)
                     ->afterStateUpdated(function(Set $set, ?string $state, string $operation) {

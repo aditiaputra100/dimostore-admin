@@ -14,6 +14,7 @@ class CategoryInfolist
         return $schema
             ->components([
                 TextEntry::make('parent.name')
+                    ->visible(fn (Category $record): bool => $record->parent_id !== null)
                     ->label('Parent')
                     ->placeholder('-'),
                 TextEntry::make('name'),
