@@ -28,6 +28,10 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function images(): HasMany {
+        return $this->hasMany(ProductImage::class);
+    }
+
     public function category(): BelongsTo {
         return $this->belongsTo(Category::class);
     }
