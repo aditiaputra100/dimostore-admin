@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,3 +34,26 @@ test('Get category product test', function() {
     expect($category->name)->toBeString();
 });
 
+test('Create product with images test', function() {
+    $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+    $product = Product::query()->first();
+
+    expect($product)->not()->toBeNull();
+
+    $productImage1 = new ProductImage([
+        'image_path' => 'some/path',
+    ]);
+    $productImage2 = new ProductImage([
+        'image_path' => 'some/another',
+    ]);
+
+    $product->images()->saveMany([$productImage1, $productImage2]);
+
+    $images = $product->images;
+
+    expect($images)->not()->toBeNull();
+    expect($images->count())->toBe(2);
+
+
+});
