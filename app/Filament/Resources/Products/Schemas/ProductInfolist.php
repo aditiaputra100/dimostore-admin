@@ -32,6 +32,7 @@ class ProductInfolist
                 TextEntry::make('weight')
                     ->numeric(),
                 ImageEntry::make('main_image')
+                    ->disk('public')
                     ->placeholder('-'),
                 TextEntry::make('status')
                     ->badge(),
