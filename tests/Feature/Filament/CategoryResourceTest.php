@@ -4,6 +4,7 @@ use App\Filament\Resources\Categories\Pages\CreateCategory;
 use App\Filament\Resources\Categories\Pages\EditCategory;
 use App\Filament\Resources\Categories\Pages\ListCategories;
 use App\Filament\Resources\Categories\Pages\ViewCategory;
+use App\Filament\Resources\Categories\RelationManagers\ChildrenRelationManager;
 use App\Models\Category;
 use Database\Seeders\CategorySeeder;
 use Filament\Actions\DeleteAction;
@@ -22,7 +23,7 @@ describe('list category', function() {
     it('can load page', function() {
         $this->seed([CategorySeeder::class]);
 
-        $categories = Category::all();
+        $categories = Category::whereNull('parent_id')->get();
 
         Livewire::test(ListCategories::class)
             ->assertOk()
@@ -32,7 +33,7 @@ describe('list category', function() {
     it('can sort category by `name`', function() {
         $this->seed([CategorySeeder::class]);
 
-        $categories = Category::all();
+        $categories = Category::whereNull('parent_id')->get();
 
         Livewire::test(ListCategories::class)
             ->assertCanSeeTableRecords($categories)
@@ -45,7 +46,7 @@ describe('list category', function() {
     it('can search category by `name`', function() {
         $this->seed([CategorySeeder::class]);
 
-        $categories = Category::all();
+        $categories = Category::whereNull('parent_id')->get();
 
         Livewire::test(ListCategories::class)
             ->assertCanSeeTableRecords($categories)
@@ -62,13 +63,14 @@ describe('list category', function() {
 
         expect($deletedCategory->trashed())->toBeTrue();
         
-        $activeCategories = Category::all();
+        $activeCategories = Category::whereNull('parent_id')->get();
         $trashedCategories = Category::onlyTrashed()->get();
 
         Livewire::test(ListCategories::class)
-            ->filterTable('trashed', '')
-            ->assertCanSeeTableRecords($activeCategories)
-            ->assertCanNotSeeTableRecords($trashedCategories)
+            ->filterTable('trashed', '0')
+            ->assertCanSeeTableRecords($trashedCategories)
+            ->assertCanNotSeeTableRecords($activeCategories)
+            ->resetTableFilters()
             ->filterTable('is_active', 1)
             ->assertCanSeeTableRecords($activeCategories->where('is_active', 1));
 
@@ -155,13 +157,20 @@ describe('create category', function() {
             'name' => 'Handphone dan Tablet'
         ]);
 
-        Livewire::test(CreateCategory::class)
-            ->fillForm([
-                'parent_id' => $subCategory->parent_id,
-                'name' => $subCategory->name,
-            ])
-            ->call('create')
-            ->assertHasNoFormErrors();
+        Livewire::test(ViewCategory::class, [
+            'record' => $category->id,
+        ])
+            ->assertSeeLivewire(ChildrenRelationManager::class);
+        
+        Livewire::test(ChildrenRelationManager::class, [
+            'ownerRecord' => $category,
+            'pageClass' => ViewCategory::class,
+        ])
+            ->assertOk()
+            ->assertCanSeeTableRecords($category->children)
+            ->callTableAction('create', data: [
+                'name' => $subCategory->name
+            ]);
 
         assertDatabaseHas(Category::class, [
             'name' => $subCategory->name,
