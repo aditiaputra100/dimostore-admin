@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authentitacable;
 use Override;
 
-#[Fillable(['name', 'password'])]
+#[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password'])]
 class Admin extends Authentitacable implements FilamentUser
 {

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'password', 'phone', 'avatar'])]
+#[Fillable(['name', 'email', 'email_verified_at', 'password', 'phone', 'avatar'])]
 #[Hidden(['password', 'remember_token'])]
 #[UseFactory(UserFactory::class)]
 class User extends Model
