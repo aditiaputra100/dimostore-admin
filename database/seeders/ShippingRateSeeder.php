@@ -16,21 +16,21 @@ class ShippingRateSeeder extends Seeder
         ShippingRate::query()->create([
             'shipping_zone_id' => 1,
             'min_weight' => 0,
-            'max_weight' => 10,
+            'max_weight' => 30,
             'price' => 4500,
         ]);
 
         ShippingRate::query()->create([
             'shipping_zone_id' => 2,
             'min_weight' => 0,
-            'max_weight' => 10,
+            'max_weight' => 30,
             'price' => 5000,
         ]);
 
         ShippingRate::query()->create([
             'shipping_zone_id' => 3,
             'min_weight' => 0,
-            'max_weight' => 10,
+            'max_weight' => 30,
             'price' => 5500,
         ]);
     }

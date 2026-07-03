@@ -23,7 +23,7 @@ return new class extends Migration
             $table->decimal('total', 15);
             $table->bigInteger('shipping_zone_id', unsigned:true)->nullable();
             $table->string('recipient_name', 100);
-            $table->string('recipient_phoe', 20);
+            $table->string('recipient_phone', 20);
             $table->text('shipping_address');
             $table->string('tracking_number', 100)->nullable();
             $table->text('notes')->nullable();
