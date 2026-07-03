@@ -30,7 +30,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('shipping_zones', function(Blueprint $table) {
+        Schema::table('shipping_rates', function(Blueprint $table) {
             $table->dropForeign(['shipping_zone_id']);
         });
 

@@ -44,7 +44,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function(Blueprint $table) {
-            $table->dropForeign(['user_id', 'shipping_zone_id']);
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['shipping_zone_id']);
         });
 
         Schema::dropIfExists('orders');

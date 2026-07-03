@@ -31,7 +31,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('cart_items', function(Blueprint $table) {
-            $table->dropForeign(['cart_id', 'product_id']);
+            $table->dropForeign(['cart_id']);
+            $table->dropForeign(['product_id']);
         });
 
         Schema::dropIfExists('cart_items');
