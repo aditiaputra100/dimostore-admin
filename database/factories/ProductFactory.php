@@ -34,7 +34,7 @@ class ProductFactory extends Factory
         }
 
         return [
-            'category_id' => Category::query()->inRandomOrder(CategorySeeder::class)->first()?->id,
+            'category_id' => Category::query()->inRandomOrder()->first()?->id,
             'name' => $name,
             'slug' => Str::slug($name),
             'description' => fake()->paragraph(2),

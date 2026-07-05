@@ -32,7 +32,7 @@ class OrderFactory extends Factory
             'status' => OrderStatus::Pending,
             'payment_method' => fake()->randomElement(PaymentMethod::cases()),
             'payment_status' => PaymentStatus::Unpaid,
-            'shipping_zone_id' => ShippingZone::inRandomOrder(ShippingZoneSeeder::class)->first()->id,
+            'shipping_zone_id' => ShippingZone::inRandomOrder()->first()->id,
             'subtotal' => 0,
             'shipping_cost' => 0,
             'total' => 0,
