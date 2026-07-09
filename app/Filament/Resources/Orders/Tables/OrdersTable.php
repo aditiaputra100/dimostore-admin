@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Orders\Tables;
 
 use App\OrderStatus;
+use App\PaymentMethod;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -23,31 +24,42 @@ class OrdersTable
         return $table
             ->columns([
                 TextColumn::make('order_number')
+                    ->label('Order Number')
+                    ->weight('bold')
                     ->searchable(),
                 TextColumn::make('user.name')
+                    ->label('Customer')
                     ->searchable(),
+                TextColumn::make('user.email')
+                    ->label('Customer Email')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('total')
-                    ->numeric()
+                    ->money('idr', locale: 'id')
                     ->sortable(),
-                TextColumn::make('payment_method')
-                    ->badge(),
                 TextColumn::make('status')
-                    ->badge(),
-                TextColumn::make('payment_status')
                     ->badge()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->colors([
+                        'gray' => 'pending',
+                        'info' => 'processing',
+                        'primary' => 'shipped',
+                        'success' => 'delivered',
+                        'danger' => 'cancelled',
+                    ]),
+                TextColumn::make('payment_method'),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Order Date')
+                    ->dateTime('d M Y')
                     ->sortable(),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('status')
                     ->multiple()
                     ->options(OrderStatus::class),
+                SelectFilter::make('payment_method')
+                    ->label('Payment Method')
+                    ->multiple()
+                    ->options(PaymentMethod::class),
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from')
@@ -86,12 +98,7 @@ class OrdersTable
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->defaultSort('created_at', 'desc');
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('status', 30);
             $table->text('note')->nullable();
             $table->bigInteger('created_by', unsigned:true)->nullable();
+            $table->timestamps();
         });
 
         Schema::table('order_status_histories', function(Blueprint $table) {

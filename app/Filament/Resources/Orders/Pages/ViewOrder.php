@@ -3,8 +3,14 @@
 namespace App\Filament\Resources\Orders\Pages;
 
 use App\Filament\Resources\Orders\OrderResource;
+use App\Models\Order;
+use App\OrderStatus;
+use Blade;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\HtmlString;
 
 class ViewOrder extends ViewRecord
 {
@@ -13,7 +19,21 @@ class ViewOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            EditAction::make()
+                ->label('Update Order')
+                ->visible(fn (Order $record) => !($record->status === OrderStatus::Delivered || $record->status === OrderStatus::Canceled)),
         ];
+    }
+
+    public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable|null {
+        $title = "Order Detail {$this->record->order_number}";
+        $backUrl = static::getResource()::getUrl('index');
+        
+        return new HtmlString(
+            view('filament.orders.custom-header-view', [
+                'backUrl' => $backUrl,
+                'title' => $title,
+            ])->render()
+        );
     }
 }

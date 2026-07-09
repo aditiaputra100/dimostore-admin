@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\OrderStatus;
+use App\PaymentMethod;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
@@ -26,6 +28,8 @@ class Order extends Model
     {
         return [
             'paid_at' => 'datetime',
+            'payment_method' => PaymentMethod::class,
+            'status' => OrderStatus::class,
         ];
     }
 
@@ -43,5 +47,15 @@ class Order extends Model
 
     public function statusHistories(): HasMany {
         return $this->hasMany(OrderStatusHistory::class);
+    }
+
+    public function isDone(OrderStatus $targetStatus): bool {
+        $currentStatus = $this->status;
+
+        if (!$currentStatus) {
+            return false;
+        }
+
+        return $targetStatus->getIndex() < $currentStatus->getIndex();
     }
 }
