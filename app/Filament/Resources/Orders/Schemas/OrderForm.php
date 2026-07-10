@@ -30,11 +30,12 @@ class OrderForm
     {
         return $schema
             ->components([
-                Section::make('')
+                Section::make('s_timeline_status')
+                    ->key('s-timeline-status')
                     ->headerActions([
                         Action::make('update_status')
                             ->label('Update Status')
-                            ->visible(fn ($record) => $record->status->canMoveForward())
+                            ->hidden(fn ($record) => in_array($record->status, [OrderStatus::Delivered, OrderStatus::Canceled]))
                             ->modalHeading('Update Order Status')
                             ->schema([
                                 TextEntry::make('order_number')
@@ -67,7 +68,7 @@ class OrderForm
     
                                     $record->update([
                                         'status' => $statusNext,
-                                        'tracking_number' => $trackingNumber,
+                                        'tracking_number' => $trackingNumber ?? $record->tracking_number,
                                     ]);
     
                                     $record->statusHistories()->create([

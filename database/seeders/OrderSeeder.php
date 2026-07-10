@@ -10,6 +10,7 @@ use App\Models\ShippingRate;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class OrderSeeder extends Seeder
 {
@@ -26,13 +27,17 @@ class OrderSeeder extends Seeder
         
         $products = Product::factory()->count(20)->create();
         
+        $time = 0;
+        $createdNow = Carbon::now();
+
         Order::factory(15)
             ->sequence(fn () => ['user_id' => $users->random()->id])
             ->has(OrderItem::factory()
                 ->sequence(fn () => ['product_id' => $products->random()->id])
                 ->count(fake()->numberBetween(1, 2)), 'items')
-            ->create()
-            ->each(function (Order $order) {
+            ->create([
+            ])
+            ->each(function (Order $order) use (&$time, $createdNow) {
                 $totalWeight = $order->items->sum(function ($item) {
                     return $item->quantity * $item->product->weight;
                 });
@@ -45,10 +50,13 @@ class OrderSeeder extends Seeder
                 $subTotal = $order->items()->sum('subtotal');
 
                 $order->update([
+                    'created_at' => $createdNow->copy()->addSeconds($time),
                     'subtotal' => $subTotal,
                     'shipping_cost' => $rate,
                     'total' => $subTotal + $rate,
                 ]);
+
+                $time += 1;
             });
     }
 }
