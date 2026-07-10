@@ -4,9 +4,6 @@ namespace App\Filament\Resources\Orders\Tables;
 
 use App\OrderStatus;
 use App\PaymentMethod;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
@@ -40,11 +37,11 @@ class OrdersTable
                 TextColumn::make('status')
                     ->badge()
                     ->colors([
-                        'gray' => 'pending',
-                        'info' => 'processing',
-                        'primary' => 'shipped',
-                        'success' => 'delivered',
-                        'danger' => 'cancelled',
+                        'gray' => OrderStatus::Pending,
+                        'info' => OrderStatus::Processing,
+                        'primary' => OrderStatus::Shipped,
+                        'success' => OrderStatus::Delivered,
+                        'danger' => OrderStatus::Canceled,
                     ]),
                 TextColumn::make('payment_method'),
                 TextColumn::make('created_at')

@@ -4,12 +4,10 @@ namespace App\Filament\Resources\Orders\Schemas;
 
 use App\Livewire\Orders\ListOrderItems;
 use App\Models\Order;
-use App\Models\OrderStatusHistory;
 use App\OrderStatus;
 use DB;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\TextEntry;
@@ -22,7 +20,6 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Stmt\Label;
 
 class OrderForm
 {
@@ -35,7 +32,7 @@ class OrderForm
                     ->headerActions([
                         Action::make('update_status')
                             ->label('Update Status')
-                            ->hidden(fn ($record) => in_array($record->status, [OrderStatus::Delivered, OrderStatus::Canceled]))
+                            ->hidden(fn ($record) => !$record->canBeEdited())
                             ->modalHeading('Update Order Status')
                             ->schema([
                                 TextEntry::make('order_number')

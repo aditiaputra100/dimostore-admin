@@ -5,9 +5,6 @@ namespace App\Filament\Resources\Orders\Pages;
 use App\Filament\Resources\Orders\OrderResource;
 use App\Models\Order;
 use App\OrderStatus;
-use Blade;
-use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\HtmlString;
@@ -21,7 +18,7 @@ class ViewOrder extends ViewRecord
         return [
             EditAction::make()
                 ->label('Update Order')
-                ->visible(fn (Order $record) => !($record->status === OrderStatus::Delivered || $record->status === OrderStatus::Canceled)),
+                ->visible(fn (Order $record) => $record->canBeEdited()),
         ];
     }
 

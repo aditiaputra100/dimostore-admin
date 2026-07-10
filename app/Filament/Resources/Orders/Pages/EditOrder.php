@@ -25,8 +25,8 @@ class EditOrder extends EditRecord
                 ->label('Cancel Order')
                 ->color('danger')
                 ->button()
-                ->modalHeading('Cancer Order')
-                ->visible(fn (Order $record) => !($record->status === OrderStatus::Delivered || $record->status === OrderStatus::Canceled))
+                ->modalHeading('Cancel Order')
+                ->visible(fn (Order $record) => $record->canBeEdited())
                 ->schema([
                     TextEntry::make('order_number')
                         ->label('Order number')

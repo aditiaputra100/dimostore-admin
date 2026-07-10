@@ -60,11 +60,19 @@ $activeIndex = array_search(
                                     disabled="true"
                                 />
                             @else
-                                <x-filament::icon-button
-                                    icon="heroicon-m-clock"
-                                    color="warning"
-                                    disabled="true"
-                                />
+                                @if ($status === OrderStatus::Delivered)
+                                    <x-filament::icon-button
+                                        icon="heroicon-m-check-circle"
+                                        color="success"
+                                        disabled="true"
+                                    />
+                                @else
+                                    <x-filament::icon-button
+                                        icon="heroicon-m-clock"
+                                        color="warning"
+                                        disabled="true"
+                                    />
+                                @endif
                             @endif
                             
                         @elseif ($index < $activeIndex)

@@ -9,10 +9,10 @@ enum PaymentMethod: string implements HasLabel
 {
     case Bank = 'bank_transfer';
     case Qris = 'qris';
-    case Cod = 'cod';
+    case Cod = 'cod';   
 
     public function getLabel(): string | Htmlable | null {
-        return strtoupper($this->name);
+        return strtoupper(implode(' ', explode('_', $this->value)));
     }
 
 }

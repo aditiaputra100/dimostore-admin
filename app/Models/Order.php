@@ -49,12 +49,18 @@ class Order extends Model
         return $this->hasMany(OrderStatusHistory::class);
     }
 
+    public function canBeEdited(): bool {
+        return !in_array($this->status, [OrderStatus::Delivered, OrderStatus::Canceled]);
+    }
+
     public function isDone(OrderStatus $targetStatus): bool {
         $currentStatus = $this->status;
 
         if (!$currentStatus) {
             return false;
         }
+
+        if ($currentStatus === OrderStatus::Delivered) return true;
 
         return $targetStatus->getIndex() < $currentStatus->getIndex();
     }
