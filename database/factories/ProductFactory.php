@@ -34,7 +34,7 @@ class ProductFactory extends Factory
         }
 
         return [
-            'category_id' => Category::query()->inRandomOrder(CategorySeeder::class)->first()?->id,
+            'category_id' => Category::query()->inRandomOrder()->first()?->id,
             'name' => $name,
             'slug' => Str::slug($name),
             'description' => fake()->paragraph(2),
@@ -42,7 +42,7 @@ class ProductFactory extends Factory
             'price' => $price,
             'original_price' => $originalPrice,
             'stock' => fake()->numberBetween(1, 10),
-            'weight' => fake()->numberBetween(5, 20),
+            'weight' => fake()->numberBetween(1, 3),
             'status' => $statusArray[$randomStatusKey],
         ];
     }
