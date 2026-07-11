@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['min_weight', 'max_weight']), WithoutTimestamps]
+#[Fillable(['min_weight', 'max_weight', 'price']), WithoutTimestamps]
 class ShippingRate extends Model
 {
     public function shippingZone(): BelongsTo {

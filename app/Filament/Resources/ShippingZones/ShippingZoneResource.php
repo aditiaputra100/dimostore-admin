@@ -6,6 +6,7 @@ use App\Filament\Resources\ShippingZones\Pages\CreateShippingZone;
 use App\Filament\Resources\ShippingZones\Pages\EditShippingZone;
 use App\Filament\Resources\ShippingZones\Pages\ListShippingZones;
 use App\Filament\Resources\ShippingZones\Pages\ViewShippingZone;
+use App\Filament\Resources\ShippingZones\RelationManagers\ShippingRatesRelationManager;
 use App\Filament\Resources\ShippingZones\Schemas\ShippingZoneForm;
 use App\Filament\Resources\ShippingZones\Schemas\ShippingZoneInfolist;
 use App\Filament\Resources\ShippingZones\Tables\ShippingZonesTable;
@@ -42,7 +43,7 @@ class ShippingZoneResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ShippingRatesRelationManager::class,
         ];
     }
 
