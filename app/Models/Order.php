@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\OrderStatus;
 use App\PaymentMethod;
+use App\PaymentStatus;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
@@ -29,6 +30,7 @@ class Order extends Model
         return [
             'paid_at' => 'datetime',
             'payment_method' => PaymentMethod::class,
+            'payment_status' => PaymentStatus::class,
             'status' => OrderStatus::class,
         ];
     }

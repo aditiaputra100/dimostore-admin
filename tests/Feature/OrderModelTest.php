@@ -2,6 +2,7 @@
 
 use App\Models\Order;
 use App\OrderStatus;
+use App\PaymentMethod;
 use App\PaymentStatus;
 use Database\Seeders\OrderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -72,9 +73,10 @@ describe('list order', function () {
         $order = Order::first();
 
         expect($order)->not()->toBeNull();
-        expect($order->status)->toBeEnum();
-        expect($order->payment_method)->toBeEnum();
-        expect($order->payment_status)->toBeEnum();
+        expect($order->status)->toBeInstanceOf(OrderStatus::class);
+        expect($order->status)->toBe(OrderStatus::Pending);
+        expect($order->payment_method)->toBeInstanceOf(PaymentMethod::class);
+        expect($order->payment_status)->toBeInstanceOf(PaymentStatus::class);
     });
 });
 
@@ -90,6 +92,6 @@ describe('edit order', function () {
         $order->save();
         $order->refresh();
 
-        expect($order->status)->toBe(OrderStatus::Canceled->value);
+        expect($order->status)->toBe(OrderStatus::Canceled);
     });
 });
