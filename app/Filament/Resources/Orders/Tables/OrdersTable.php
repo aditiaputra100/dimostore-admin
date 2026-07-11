@@ -95,6 +95,7 @@ class OrdersTable
             ])
             ->recordActions([
                 ViewAction::make(),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 }
