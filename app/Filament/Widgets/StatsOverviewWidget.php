@@ -12,7 +12,7 @@ use NumberFormatter;
 
 class StatsOverviewWidget extends BaseStatsOverviewWidget
 {
-    protected ?string $poolingInterval = '60s';
+    protected static ?string $poolingInterval = '60s';
     protected function getStats(): array
     {
         $activeProducts = Product::where('status', 'active')->count();

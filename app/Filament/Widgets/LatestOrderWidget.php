@@ -65,7 +65,6 @@ class LatestOrderWidget extends TableWidget
                 BulkActionGroup::make([
                     //
                 ]),
-            ])
-            ->defaultSort('created_at', 'desc');
+            ]);
     }
 }
