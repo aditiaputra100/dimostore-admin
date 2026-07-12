@@ -12,6 +12,9 @@ use App\Filament\Resources\ShippingZones\Schemas\ShippingZoneInfolist;
 use App\Filament\Resources\ShippingZones\Tables\ShippingZonesTable;
 use App\Models\ShippingZone;
 use BackedEnum;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -55,5 +58,19 @@ class ShippingZoneResource extends Resource
             'view' => ViewShippingZone::route('/{record}'),
             'edit' => EditShippingZone::route('/{record}/edit'),
         ];
+    }
+
+    public static function validateDeletion(DeleteAction | DeleteBulkAction $action, ShippingZone $record): void {
+        $isShippingZoneUse = $record->orders()->count() > 0;
+
+        if ($isShippingZoneUse) {
+            Notification::make()
+                ->danger()
+                ->title('Action denied')
+                ->body('Cannot delete a zone that contains orders.')
+                ->send();
+
+                $action->halt();
+        }
     }
 }

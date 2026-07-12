@@ -18,17 +18,7 @@ class EditShippingZone extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make()
-                ->before(function (DeleteAction $action, ShippingZone $record) {
-                   if ($record->orders()->count() > 0) {
-                    Notification::make()
-                        ->danger()
-                        ->title('Action denied')
-                        ->body('Cannot delete a zone that contains orders.')
-                        ->send();
-
-                        $action->halt();
-                   }
-                }),
+                ->before(fn (DeleteAction $action) => ShippingZoneResource::validateDeletion($action, $this->getRecord())),
         ];
     }
 }

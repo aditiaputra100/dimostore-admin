@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\ShippingZones\Tables;
 
+use App\Filament\Resources\ShippingZones\ShippingZoneResource;
 use App\Models\ShippingRate;
 use App\Models\ShippingZone;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -15,6 +17,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class ShippingZonesTable
 {
@@ -51,11 +54,19 @@ class ShippingZonesTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make()
+                    ->before(fn (DeleteAction $action, ShippingZone $record) => ShippingZoneResource::validateDeletion($action, $record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->before(function (DeleteBulkAction $action, Collection $records) {
+                            foreach ($records as $record) {
+                                ShippingZoneResource::validateDeletion($action, $record);
+                            }
+                        }),
                 ]),
-            ]);
+            ])
+            ->defaultSort('name');
     }
 }
