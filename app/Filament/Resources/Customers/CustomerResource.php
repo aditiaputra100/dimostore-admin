@@ -25,6 +25,7 @@ class CustomerResource extends Resource
     protected static ?string $pluralModelLabel = 'Customers';
     protected static ?string $navigationLabel = 'Customers';
     protected static string | UnitEnum | null $navigationGroup = 'Users';
+    protected static ?int $navigationSort = 1;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Users;
 

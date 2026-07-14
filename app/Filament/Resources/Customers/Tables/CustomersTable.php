@@ -28,12 +28,11 @@ class CustomersTable
                 ImageColumn::make('avatar')
                     ->imageHeight(40)
                     ->circular()
-                    ->default(function (User $record) {
-                        dd($record);
+                    ->defaultImageUrl(function (User $record) {
                         preg_match_all('/\b\p{L}/u', $record->name, $matches);
                         $initial = implode('', $matches[0]);
 
-                        return "https://ui-avatars.com{$initial}&color=7F9CF5&background=EBF4FF";
+                        return "https://ui-avatars.com/api/?name={$initial}&color=7F9CF5&background=EBF4FF";
                     }),
                 TextColumn::make('name')
                     ->searchable(),

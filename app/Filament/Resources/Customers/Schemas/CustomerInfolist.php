@@ -23,6 +23,12 @@ class CustomerInfolist
                         Flex::make([
                             ImageEntry::make('avatar')
                                 ->hiddenLabel()
+                                ->defaultImageUrl(function (User $record) {
+                                    preg_match_all('/\b\p{L}/u', $record->name, $matches);
+                                    $initial = implode('', $matches[0]);
+
+                                    return "https://ui-avatars.com/api/?name={$initial}&color=7F9CF5&background=EBF4FF";
+                                })
                                 ->grow(false),
                             Fieldset::make('')
                                 ->columns(columns: 1)
