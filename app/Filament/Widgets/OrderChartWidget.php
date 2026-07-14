@@ -79,36 +79,14 @@ class OrderChartWidget extends ChartWidget
                     ->count();
         }
 
-
-        // $start = now()->subMonths(11)->startOfMonth();
-        // $end = now()->endOfMonth();
-
-        // $orders = Order::selectRaw('COUNT(*) as count, DATE_FORMAT(created_at, "%Y-%m") as period')
-        //     ->whereBetween('created_at', [
-        //         $start->toDateTimeString(), 
-        //         $end->toDateTimeString(),
-        //     ])
-        //     ->groupBy('period')
-        //     ->orderBy('period')
-        //     ->pluck('count', 'period')
-        //     ->toArray();
-
-        // $data = [];
-        // $labels = [];
-        // $current = $start->copy();
-
-        // while ($current->lessThanOrEqualTo($end)) {
-        //     $key = $current->format('Y-m');
-        //     $labels[] = $current->translatedFormat('M y');
-        //     $data[] = $orders[$key] ?? 0;
-        //     $current->addMonth();
-        // }
-
         return [
             'datasets' => [
                 [
                     'label' => 'Number of Orders',
-                    'borderColor' => '#000080',
+                    'borderColor' => '#3b82f6', 
+                    'backgroundColor' => 'rgba(59, 130, 246, 0.2)', 
+                    'fill' => true,
+                    'tension' => 0.4, 
                     'data' => $trend->map(fn (TrendValue $value) => $value->aggregate),
                 ]
             ],
