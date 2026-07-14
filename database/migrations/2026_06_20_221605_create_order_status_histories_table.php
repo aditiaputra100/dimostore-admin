@@ -16,7 +16,8 @@ return new class extends Migration
             $table->bigInteger('order_id', unsigned:true);
             $table->string('status', 30);
             $table->text('note')->nullable();
-            $table->bigInteger('created_by', unsigned:true);
+            $table->bigInteger('created_by', unsigned:true)->nullable();
+            $table->timestamps();
         });
 
         Schema::table('order_status_histories', function(Blueprint $table) {
@@ -31,7 +32,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('order_status_histories', function(Blueprint $table) {
-            $table->dropForeign(['order_id', 'created_by']);
+            $table->dropForeign(['order_id']);
+            $table->dropForeign(['created_by']);
         });
 
         Schema::dropIfExists('order_status_histories');
