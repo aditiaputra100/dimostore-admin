@@ -6,6 +6,7 @@ use App\Filament\Resources\Customers\Pages\CreateCustomer;
 use App\Filament\Resources\Customers\Pages\EditCustomer;
 use App\Filament\Resources\Customers\Pages\ListCustomers;
 use App\Filament\Resources\Customers\Pages\ViewCustomer;
+use App\Filament\Resources\Customers\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\Customers\Schemas\CustomerForm;
 use App\Filament\Resources\Customers\Schemas\CustomerInfolist;
 use App\Filament\Resources\Customers\Tables\CustomersTable;
@@ -15,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class CustomerResource extends Resource
 {
@@ -22,6 +24,7 @@ class CustomerResource extends Resource
     protected static ?string $modelLabel = 'Customer';
     protected static ?string $pluralModelLabel = 'Customers';
     protected static ?string $navigationLabel = 'Customers';
+    protected static string | UnitEnum | null $navigationGroup = 'Users';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Users;
 
@@ -43,7 +46,7 @@ class CustomerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OrdersRelationManager::class,
         ];
     }
 
