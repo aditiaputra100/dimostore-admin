@@ -53,7 +53,7 @@ class AuthController extends Controller
     }
 
     public function me(Request $request) {
-        return $this->successResponse($request->user(), 'User data successfully retrieved');
+        return $this->successResponse($request->user()->toResource(), 'User data successfully retrieved');
     }
 
     public function logout(Request $request) {
