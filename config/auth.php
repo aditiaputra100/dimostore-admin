@@ -46,6 +46,10 @@ return [
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins'
+        ],
+        'api' => [
+            'driver' => 'session',
+            'provider' => 'users',
         ]
     ],
 
@@ -72,10 +76,10 @@ return [
             'model' => env('AUTH_MODEL', Admin::class),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => User::class,
+        ],
     ],
 
     /*
